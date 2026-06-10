@@ -1,0 +1,20 @@
+export { default as Logo } from "./logo.svg";
+export { default as Side_Img } from "./side-img.svg";
+export { default as Fav_icon } from "./favicon.ico";
+
+export { default as Edit } from "./edit.svg";
+export { default as Back } from "./back.svg";
+export { default as Search } from "./search.svg";
+export { default as Delete } from "./delete.svg";
+export { default as Filter } from "./filter.svg";
+export { default as Follow } from "./follow.svg";
+export { default as Like_Icon } from "./like.svg";
+export { default as Log_Out } from "./logout.svg";
+export { default as Save_Icon } from "./save.svg";
+export { default as Liked_Icon } from "./liked.svg";
+export { default as Posts_Icon } from "./posts.svg";
+export { default as Saved_Icon } from "./saved.svg";
+export { default as Add_Post } from "./add-post.svg";
+export { default as Loader_icon } from "./loader.svg";
+export { default as Book_mark } from "./bookmark.svg";
+export { default as File_Upload } from "./file-upload.svg";

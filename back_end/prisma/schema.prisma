@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  userName String
+  bio      String
+  email    String @unique
+  password String
+
+  followerCounts  Int @default(0)
+  followingCounts Int @default(0)
+  postCounts      Int @default(0)
+
+  posts Post[]
+  likes Like[]
+  saved Saved[]
+
+  followers Follower[] @relation("followers")
+  following Follower[] @relation("following")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Saved {
+  id String @id @default(uuid())
+
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+model Post {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  caption   String
+  imageUrl  String
+  public_id String
+
+  likeCounts    Int @default(0)
+  commentCounts Int @default(0)
+
+  likes Like[]
+  saved Saved[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([id, userId])
+}
+
+model Like {
+  id     String @id @default(uuid())
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+model Follower {
+  id          String @id @default(uuid())
+  followingId String
+  followerId  String
+
+  following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  follower  User @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+
+  @@unique([followingId, followerId])
+  @@index([followingId, followerId])
+}
